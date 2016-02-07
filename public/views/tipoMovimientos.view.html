@@ -1,4 +1,11 @@
- <a class="btn-floating btn-large waves-effect waves-light red" ng-show="!addNew" ng-click="addNewOn()"><i class="material-icons">add</i></a> 
+<h3 class="center">Administrar Tipos</h3>
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;" ng-show="!addNew">
+    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="addNewOn()">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+
 <div class="row" ng-show="addNew">
     <form class="col s12" >
       <div class="row">
@@ -30,7 +37,7 @@
       </div>
     </form>
   </div>
-
+<br>
 <table datatable="ng" dt-options="dtOptions">
         <thead>
             <tr>

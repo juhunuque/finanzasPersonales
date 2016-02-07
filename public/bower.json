@@ -16,6 +16,7 @@
     "angular-css": "~1.0.7",
     "angular-datatables": "~0.5.3",
     "angular-route": "~1.4.9",
-    "angular-toastr": "~1.7.0"
+    "angular-toastr": "~1.7.0",
+    "angularjs-datepicker": "~0.2.16"
   }
 }

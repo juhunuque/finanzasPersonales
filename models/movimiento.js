@@ -28,7 +28,12 @@ var Movimiento = module.exports = mongoose.model('Movimiento', movimientosSchema
 
 //Get all Movimientos
 module.exports.getMovimientos = function(callback){
-    Movimiento.find(callback);
+    Movimiento.find(callback).sort({_id: -1});
+};
+
+module.exports.getMovimientosDates = function(data,callback){
+    var query = {"fecha":{'$gte':data.dateIn,'$lt':data.dateOut}};
+    Movimiento.find(query,callback).sort({_id: -1});
 };
 
 //Get Movimiento by ID
@@ -39,7 +44,7 @@ module.exports.getMovimientoById = function(id, callback){
 //Get Movimientos by Tipo
 module.exports.getMovimientoByTipo = function(tipo,callback){
     var query = {tipo: tipo}
-    Article.find(query,callback);
+    Movimiento.find(query,callback);
 };
 
 //Add a Movimientos
@@ -49,10 +54,11 @@ module.exports.createMovimiento = function(newMovimiento, callback){
 
 //Update a Movimiento
 module.exports.updateMovimiento = function(id,data,callback){
-    var movimiento = data.movimiento;
+    var movimientoD = data.movimiento;
     var monto = data.monto;
     var tipo = data.tipo;
-    var categoria = data.categoria
+    var categoria = data.categoria;
+    var fecha = data.fecha;
     
     var query = {_id: id};
     
@@ -62,9 +68,10 @@ module.exports.updateMovimiento = function(id,data,callback){
         }
         else{
             //Update
-            movimiento.movimiento = movimiento;
+            movimiento.movimiento = movimientoD;
             movimiento.monto = monto;
             movimiento.tipo = tipo;
+            movimiento.fecha = fecha;
             movimiento.categoria = categoria;
             
             movimiento.save(callback);

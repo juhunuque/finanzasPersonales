@@ -12,6 +12,19 @@ router.get('/', function(req, res, next) {
   });  
 });
 
+router.post('/betweenDates', function(req, res, next) {
+    var data = {
+        dateIn: req.body.dateIn,
+        dateOut: req.body.dateOut,
+    };
+  Movimiento.getMovimientosDates(data,function(err,movimientos){
+      if(err){
+          console.log(err);
+      }
+      res.json(movimientos);
+  });  
+});
+
 // If you want a parameter, you just need to declare it in the URL(Example: :id)
 router.get('/:id', function(req, res, next) {
   Movimiento.getMovimientoById(req.params.id,function(err,movimiento){
@@ -36,12 +49,14 @@ router.post("/",function(req, res, next){
     var movimiento = req.body.movimiento;
     var monto = req.body.monto;
     var tipo = req.body.tipo;
+    var fecha = req.body.fecha;
     var categoria = req.body.categoria;
 
     var newMovimiento = new Movimiento({
         movimiento: movimiento,
         monto: monto,
         tipo: tipo,
+        fecha: fecha,
         categoria: categoria
     })
     
@@ -61,16 +76,17 @@ router.put("/",function(req,res,next){
     var data = {
         movimiento: req.body.movimiento,
         monto: req.body.monto,
-        tipo: req.body.tipo
+        fecha: req.body.fecha,
+        tipo: req.body.tipo,
+        categoria: req.body.categoria
     };
-    
     Movimiento.updateMovimiento(id, data, function(err, movimiento){
        if(err){
            console.log(err);
+           res.status(500).json({status:500,error:err});
        } 
         
-        res.location('/movimientos');
-        res.redirect('/movimientos');
+        res.status(200).json({status:200});
     });
 });
 
@@ -79,11 +95,11 @@ router.delete("/:id",function(req, res, next){
     
     Movimiento.removeMovimiento(id,function(err, movimiento){
         if(err){
-            console.log(err);
-        }
+           console.log(err);
+           res.status(500).json({status:500,error:err});
+       } 
         
-        res.location("/movimientos");
-        res.redirect("/movimientos");
+        res.status(200).json({status:200});
     });
 });
 

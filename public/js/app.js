@@ -1,4 +1,4 @@
-var app = angular.module('finanzasApp',['ngRoute','door3.css','ngAnimate','toastr','datatables']);
+var app = angular.module('finanzasApp',['ngRoute','door3.css','ngAnimate','toastr','datatables','720kb.datepicker']);
 
 app.config(['$routeProvider',function($routeProvider){
 
