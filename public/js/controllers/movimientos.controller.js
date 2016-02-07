@@ -203,6 +203,11 @@ angular.module("finanzasApp")
     }
     
     $scope.filterRun = function(){
+        if(jQuery.isEmptyObject( $scope.filter1 ) || jQuery.isEmptyObject( $scope.filter2 ) || $scope.filter2 == "" ||$scope.filter1 == "")
+        {
+            toastr.warning('Verifique los datos');
+            return;        
+        }
         $http.post('/movimientos/betweenDates',{
             dateIn: $scope.filter1,
             dateOut: $scope.filter2
