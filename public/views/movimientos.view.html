@@ -1,0 +1,36 @@
+ <a class="btn-floating btn-large waves-effect waves-light red" ng-show="!addNew" ng-click="addNewOn()"><i class="material-icons">add</i></a>
+  <div class="row" ng-show="addNew">
+    <form class="col s12" >
+      <div class="row">
+        <div class="input-field col s5 m5 l5">
+          <input placeholder="Movimiento" id="movimiento" type="text"  ng-model="movimiento" class="validate">
+          <label for="movimiento">Movimiento</label>
+        </div>
+          
+        <div class="input-field col s2 m2 l2">
+          <input placeholder="Monto" id="monto" type="number"  ng-model="monto" min="0" class="validate">
+          <label for="monto">Monto</label>
+        </div>
+          
+        <div class="input-field col s3 m3 l3">
+            <select ng-model="selectedTipo" ng-options="tipo.descripcion for tipo in tipos" 
+                    ng-if="tipos" ng-selected="selectedTipo.descripcion == tipo.descripcion" ng-change="selectedTipoSel(selectedTipo)" >
+            </select>
+            <label>Tipo</label>
+        </div>
+          
+        <div class="input-field col s2 m2 l2 center">
+            <button class="btn waves-effect waves-light indigo darken-3 btn-floating" ng-click="addMovimiento()" name="action">
+                <i class="material-icons left">done</i>
+            </button>
+            <button class="btn waves-effect waves-light red btn-floating" ng-click="addNewOff()" name="action">
+                <i class="material-icons left">clear</i>
+            </button>
+        </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+        

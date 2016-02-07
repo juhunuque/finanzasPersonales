@@ -1,0 +1,21 @@
+{
+  "name": "public",
+  "version": "0.0.1",
+  "main": "index.html",
+  "keywords": [
+    "bower"
+  ],
+  "authors": [
+    "Julio"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "Materialize": "materialize#~0.97.5",
+    "angular": "~1.4.9",
+    "angular-animate": "~1.5.0",
+    "angular-css": "~1.0.7",
+    "angular-datatables": "~0.5.3",
+    "angular-route": "~1.4.9",
+    "angular-toastr": "~1.7.0"
+  }
+}
