@@ -1,7 +1,8 @@
 <div class="row center" ng-if="movimientos.length > 0">
-    <div class="col s6 m3 l3 hide-on-med-and-down"><h3>Movimientos</h3></div>
-    <div class="col s4 m4 l4 hide-on-med-and-down" ><h5 >Ingresos</h5><span>{{getIngreso() | currency : '₡' : fractionSize}}</span></div>
-    <div class="col s4 m4 l4 hide-on-med-and-down"><h5 >Egresos</h5><span class="red-text">{{getEgreso() | currency : '₡' : fractionSize}}</span></div>
+    <div class="col s3 m3 l3"><h3>Movimientos</h3></div>
+    <div class="col s3 m3 l3 hide-on-med-and-down" ><h5 >Ingresos</h5><span>{{getIngreso() | currency : '₡' : fractionSize}}</span></div>
+    <div class="col s3 m3 l3 hide-on-med-and-down"><h5 >Egresos</h5><span class="red-text">{{getEgreso() | currency : '₡' : fractionSize}}</span></div>
+    <div class="col s2 m2 l2 hide-on-med-and-down"><h5 >Neto</h5><span>{{getIngreso() - getEgreso() | currency : '₡' : fractionSize}}</span></div>
     <div class="col s1 m1 l1 hide-on-med-and-down">
         <h3><button class="btn waves-effect waves-light indigo darken-1 btn-floating" ng-click="toogleFilter()" name="action">
             <i class="material-icons left" ng-show="!filter">zoom_in</i>

@@ -11,5 +11,9 @@ app.config(['$routeProvider',function($routeProvider){
         templateUrl: 'views/tipoMovimientos.view.html',
         controller: 'TipoMovimientosCtrl'
     })
+    .when('/presupuestoMain',{
+        templateUrl: 'views/presupuestoMain.view.html',
+        controller: 'PresupuestoMainCtrl'
+    })
     .otherwise({redirectTo: 'movimientos'})
 }]);

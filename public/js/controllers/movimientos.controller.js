@@ -141,7 +141,7 @@ angular.module("finanzasApp")
         $scope.id = row._id;
         $scope.movimiento = row.movimiento;
         $scope.monto = row.monto;
-        $scope.fecha = $filter('date')(row.fecha, "MM/dd/yyyy");;
+        $scope.fecha = $filter('date')(row.fecha, "MM/dd/yyyy");
         $scope.selectedTipo = row.tipo;
         $scope.tipo = row.tipo;
         
@@ -156,14 +156,6 @@ angular.module("finanzasApp")
         $scope.selectName = null;
         $scope.selectedTipo = $scope.tipos[0];
     }
-    
-    $scope.getIngresos = function(){
-        var result = 0;
-        $scope.invoiceDetails.details.forEach(function (item){
-            result = result + (item.precio * item.cantidad);
-        });
-        return result;
-    };
     
     $scope.getIngreso = function(){
         var result = 0;

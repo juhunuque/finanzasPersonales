@@ -14,6 +14,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var movimientos = require('./routes/movimientos');
 var tipoMovimientos = require('./routes/tiposMovimientos');
+var presupuestos = require('./routes/presupuestosMain');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/movimientos', movimientos);
 app.use('/tiposMovimientos', tipoMovimientos);
+app.use('/presupuestosMain', presupuestos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
