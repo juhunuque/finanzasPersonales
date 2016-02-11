@@ -83,11 +83,14 @@ angular.module("finanzasApp")
                         }
                         toastr.success("Generado Satisfactoriamente");
                         $scope.presupuestoMain.detalles = JSON.stringify(resultObject);
+                        refresh();
                         return;
                     }
             })
+        }else{
+            refresh();
         }
-        refresh();
+        
         $scope.loader = false;    
     }
     
