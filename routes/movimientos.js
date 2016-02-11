@@ -94,6 +94,9 @@ router.put("/",function(req,res,next){
         tipo: req.body.tipo,
         categoria: req.body.categoria
     };
+    
+    console.log(data.categoria);
+    console.log(data.tipo);
     Movimiento.updateMovimiento(id, data, function(err, movimiento){
        if(err){
            console.log(err);

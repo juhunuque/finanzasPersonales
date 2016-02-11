@@ -7,7 +7,7 @@ angular.module("finanzasApp")
     $scope.filter = false;
     $scope.addNew = false;
     $scope.selectStatus = true;
-    var selectedTipoSelect = "";
+    var selectedTipoSelect;
     $http.get('/tiposMovimientos').then(function(response){
         $scope.tipos = response.data;
         $scope.selectedTipo = $scope.tipos[0];
@@ -60,21 +60,28 @@ angular.module("finanzasApp")
             var tipo = "";
             var categoria = ""
     
-            if($scope.selectStatus && $scope.selectName != null){
-                tipo = selectedTipoSelect.tipo;
-                categoria = selectedTipoSelect.categoria;
+            console.log("Q1: " + $scope.selectStatus);
+            console.log("Q2: " + $scope.selectName);
+            console.log("Q3: " + $scope.tipo);
+            console.log("Q4: " + $scope.selectName);
+            console.log("Q5: " + selectedTipoSelect.tipo);
+            console.log("Q6: " + selectedTipoSelect.categoria);
+            
+            if(!$scope.selectStatus && $scope.selectName != null){
+                tipo = $scope.tipo;
+                categoria = $scope.selectName;
                 console.log("2");
 
 
             }else{
-                tipo = $scope.tipo;
-                categoria = $scope.selectName;
+                tipo = selectedTipoSelect.tipo;
+                categoria = selectedTipoSelect.descripcion;
                             console.log("1");
                 
                 
 
             }
-
+            
             $http.put('/movimientos',{
                 id: $scope.id,
                 movimiento: $scope.movimiento,
@@ -155,6 +162,8 @@ angular.module("finanzasApp")
         $scope.selectStatus = true;
         $scope.selectName = null;
         $scope.selectedTipo = $scope.tipos[0];
+        selectedTipoSelect = $scope.tipos[0];
+        
     }
     
     $scope.getIngreso = function(){
