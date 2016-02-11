@@ -20,6 +20,10 @@ var presupuestoMainSchema = mongoose.Schema({
     detalles:{
         type: String,
         default: ''
+    },
+    tipos:{
+        type: String,
+        default: ''
     }
 });
 
@@ -47,11 +51,11 @@ module.exports.updatePresupuestoMain = function(id,data,callback){
     var categoria = data.categoria;
     var valor_categoria = data.valor_categoria;
     var detalles = data.detalles;
+    var tipos = data.tipos;
     
     var query = {_id: id};
     
     PresupuestoMain.findById(id,function(err,presupuesto){
-        console.log(presupuesto);
         if(!presupuesto){
             return next(new Error("Could not load Presupuesto"));
         }
@@ -62,6 +66,7 @@ module.exports.updatePresupuestoMain = function(id,data,callback){
             presupuesto.categoria = categoria;
             presupuesto.valor_categoria = valor_categoria;
             presupuesto.detalles = detalles;
+            presupuesto.tipos = tipos;
             
             presupuesto.save(callback);
         }

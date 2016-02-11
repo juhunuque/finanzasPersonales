@@ -25,6 +25,20 @@ router.post('/betweenDates', function(req, res, next) {
   });  
 });
 
+router.post('/betweenDatesAndCategory', function(req, res, next) {
+    var data = {
+        dateIn: req.body.dateIn,
+        dateOut: req.body.dateOut,
+        category: req.body.categoria
+    };
+  Movimiento.getMovimientosDates(data,function(err,movimientos){
+      if(err){
+          console.log(err);
+      }
+      res.json(movimientos);
+  });  
+});
+
 // If you want a parameter, you just need to declare it in the URL(Example: :id)
 router.get('/:id', function(req, res, next) {
   Movimiento.getMovimientoById(req.params.id,function(err,movimiento){

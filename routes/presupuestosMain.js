@@ -30,13 +30,15 @@ router.post("/",function(req, res, next){
     var categoria = req.body.categoria;
     var valor_categoria = req.body.valor_categoria;
     var detalles = req.body.detalles;
+    var tipos = req.body.tipos;
     
     var newPresupuesto = new PresupuestoMain({
         descripcion: descripcion,
         fecha_inicio: fecha_inicio,
         categoria: categoria,
         valor_categoria: valor_categoria,
-        detalles: detalles
+        detalles: detalles,
+        tipos: tipos
         
     })
     
@@ -58,7 +60,8 @@ router.put("/",function(req,res,next){
         fecha_inicio: req.body.fecha_inicio,
         categoria: req.body.categoria,
         valor_categoria: req.body.valor_categoria,
-        detalles: req.body.detalles
+        detalles: req.body.detalles,
+        tipos: req.body.tipos
     };
     
     PresupuestoMain.updatePresupuestoMain(id, data, function(err, presupuesto){

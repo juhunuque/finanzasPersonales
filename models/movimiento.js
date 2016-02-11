@@ -36,6 +36,11 @@ module.exports.getMovimientosDates = function(data,callback){
     Movimiento.find(query,callback).sort({_id: -1});
 };
 
+module.exports.getMovimientosDatesCategory = function(data,callback){
+    var query = {"fecha":{'$gte':data.dateIn,'$lt':data.dateOut},"categoria":data.category};
+    Movimiento.find(query,callback).sort({_id: -1});
+};
+
 //Get Movimiento by ID
 module.exports.getMovimientoById = function(id, callback){
     Movimiento.findById(id, callback);

@@ -1,0 +1,89 @@
+<h3 class="center">Detalles</h3>
+
+<div class="row">
+    <div class="col s4 m4 l4">
+        
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">list</i>Tipos</div>
+              <div class="collapsible-body">
+                  <div class="collection" ng-repeat="tipo in tiposList" ng-if="tiposList.lenght != 0" style="margin-bottom:1%;">
+                    <div class="row">
+                        <span class="collection-item light-blue-text">
+                            {{tipo.tipo.descripcion}} - {{tipo.monto | currency : '₡' : fractionSize}}
+                        </span>
+                      </div>
+                  </div>
+                <span class="center" ng-if="tiposList.length == 0"><h5>No hay elementos</h5></span>
+              </div>
+            </li>
+          </ul>
+    </div>
+    <div class="col s6 m6 l6">
+        <div class="row">
+            <div class="col s4 m4 l4">
+                <h6 style="font-weight: bold;">Presupuesto</h6>
+                <span>{{presupuestoMain.descripcion}}</span>
+            </div>
+            <div class="col s4 m4 l4">
+                <h6 style="font-weight: bold;">Fecha Inicio</h6>
+                <span>{{presupuestoMain.fecha_inicio | date:'MM/dd/yyyy'}}</span>
+            </div>
+            <div class="col s4 m4 l4">
+                <h6 style="font-weight: bold;">Categoria</h6>
+                <span>{{presupuestoMain.categoria}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="col s2 m2 l2">
+        <h6 style="font-weight: bold;">Acciones</h6>
+        <a href="#/presupuestoMain">Volver</a>
+        <a ng-click="runCreateProcess()" href=""><i class="material-icons left">play_arrow</i></a>
+    </div>
+</div>
+
+<div ng-show="loader">
+    <h4>Cargando...</h4>
+     <div class="progress">
+      <div class="indeterminate"></div>
+    </div>
+</div>
+
+<div ng-show="!flagDetalles" class="center">
+    <br><br>
+    <h3>No hay datos que mostrar</h3>
+</div>
+
+<div ng-show="flagDetalles">
+      <table datatable="ng" dt-options="dtOptions">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Categoria</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Final</th>
+                <th>Presupuestado</th>
+                <th>Monto Real</th>
+                <th>Monto Neto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="detalle in detalles">
+                <td>{{$index + 1}}</td>
+                <td>{{detalle.categoria}}</td>
+                <td>{{detalle.fecha_ini | date:'MM/dd/yyyy'}}</td>
+                <td>{{detalle.fecha_end | date:'MM/dd/yyyy'}}</td>
+                <td>{{detalle.presupuesto | currency : '₡' : fractionSize}}</td>
+                <td>{{detalle.total | currency : '₡' : fractionSize}}</td>
+                <td ng-if="detalle.presupuesto < detalle.total">
+                    <span class="red-text">{{detalle.presupuesto - detalle.total | currency : '₡' : fractionSize}}
+                    </span>
+                </td>
+                <td ng-if="detalle.presupuesto > detalle.total">
+                    <span >{{detalle.presupuesto - detalle.total | currency : '₡' : fractionSize}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

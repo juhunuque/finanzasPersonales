@@ -1,8 +1,9 @@
 angular.module("finanzasApp")
 
-.controller('PresupuestoMainCtrl',['$scope','$http','toastr','DTOptionsBuilder','$filter','$dataFactory',function($scope, $http,toastr,DTOptionsBuilder,$filter,$dataFactory){
+.controller('PresupuestoMainCtrl',['$scope','$http','toastr','DTOptionsBuilder','$filter','$dataFactory','$location',function($scope, $http,toastr,DTOptionsBuilder,$filter,$dataFactory,$location){
     console.log('PresupuestoMainCtrl Init...');
     
+    var selectedTipoSelect = "";
     var selectedFrecuenciaSelect = "";
     $scope.frecuencias = $dataFactory.frecuencias;
     $scope.selectedFrecuencia = $scope.frecuencias[0];
@@ -12,6 +13,16 @@ angular.module("finanzasApp")
     $scope.filter = false;
     $scope.addNew = false;
     $scope.selectStatus = true;
+    
+    $http.get('/tiposMovimientos').then(function(response){
+          $scope.tiposList = response.data;
+          $scope.tiposSelected = [];
+            
+        
+          $scope.selectedTipo = $scope.tiposList[0];
+          selectedTipoSelect =  $scope.tiposList[0];
+
+    });
     
     
     // DataTables configurable options
@@ -34,21 +45,23 @@ angular.module("finanzasApp")
     function refresh(){
         $scope.descripcion = "";
         $scope.fecha_inicio = "";
-        
+        $dataFactory.presupuestoSelected = {};
+        $scope.monto = "";
         
         $scope.selectStatus = true;
         $scope.selectName = null;
         
+        $scope.tiposSelected = [];
         
         $http.get('/presupuestosMain').then(function(response){
             $scope.presupuestos = response.data;
         })
+        
+        
     }
     
     $scope.selectedFrecuenciaSel = function(pItem) {
         selectedFrecuenciaSelect = pItem;
-        console.log(JSON.stringify(selectedFrecuenciaSelect));
-        
     }
     
     $scope.updateActivate = function(row){
@@ -57,6 +70,8 @@ angular.module("finanzasApp")
         $scope.fecha_inicio = $filter('date')(row.fecha_inicio, "MM/dd/yyyy");
         $scope.categoria = row.categoria;
         $scope.valor_categoria = row.valor_categoria;
+        
+        $scope.tiposSelected = JSON.parse(row.tipos);
         
         $scope.addNew = true;
         $scope.selectStatus = false;
@@ -96,18 +111,14 @@ angular.module("finanzasApp")
         }*/
         // INSERT
         if (jQuery.isEmptyObject( $scope.id )){
-            console.log("INSERT");
-            console.log($scope.descripcion);
-            console.log($scope.fecha_inicio);
-            console.log(selectedFrecuenciaSelect.name);
-            console.log(selectedFrecuenciaSelect.value);
 
             $http.post('/presupuestosMain',{
                 descripcion: $scope.descripcion,
                 fecha_inicio: $scope.fecha_inicio,
                 categoria: selectedFrecuenciaSelect.name,
                 valor_categoria: selectedFrecuenciaSelect.value,
-                detalles: ''
+                detalles: '',
+                tipos: JSON.stringify($scope.tiposSelected)
             }).then(function(data){
                 if (!jQuery.isEmptyObject( data ))
                     {
@@ -125,7 +136,6 @@ angular.module("finanzasApp")
 
         }else{
             //UPDATE
-            console.log("UPDATE");
 
             var categoria = "";
             var valor_categoria = "";
@@ -142,6 +152,7 @@ angular.module("finanzasApp")
                 fecha_inicio: $scope.fecha_inicio,
                 categoria: selectedFrecuenciaSelect.name,
                 valor_categoria: selectedFrecuenciaSelect.value,
+                tipos: JSON.stringify($scope.tiposSelected)
             }).then(function(data){
                 if (!jQuery.isEmptyObject( data ))
                     {
@@ -156,8 +167,42 @@ angular.module("finanzasApp")
                         return;
                     }
             })
-        }
-            
+        }       
     }
+    
+    $scope.goToDetails = function(row){
+        $dataFactory.presupuestoSelected = row;
+        $location.url('/presupuestoDetail');
+        
+    }
+    
+    
+    //
+    $scope.addToSelectedList = function(){
+        if( $scope.tiposSelected == null ){
+            $scope.tiposSelected = [];
+        }
+        $scope.tiposSelected.push({tipo:selectedTipoSelect,
+                                  monto: $scope.monto});
+        
+        $scope.monto = "";
+        
+    }
+    
+    $scope.removeFromSelectedList = function(row){
+        //$scope.tiposList.push(row);
+        
+        var i = $scope.tiposSelected.indexOf(row);
+        if(i != -1) {
+            $scope.tiposSelected.splice(i, 1);
+        }
+    }
+    
+    $scope.selectedTipoSel = function(pItem) {
+        selectedTipoSelect = pItem;
+    }
+ 
+
+    
 }])
 
