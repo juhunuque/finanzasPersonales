@@ -19,6 +19,7 @@ angular.module("finanzasApp")
     
     var dateIni;
     var dateEnd;
+    $scope.chartObject = {};
 
     refresh();
     
@@ -107,6 +108,7 @@ angular.module("finanzasApp")
         if($scope.presupuestoMain.detalles){
             $scope.detalles = JSON.parse($scope.presupuestoMain.detalles);
             $scope.flagDetalles = true;
+            formatDataForChart();
         }
         
         $http.post('/movimientos/betweenDates',{
@@ -118,45 +120,42 @@ angular.module("finanzasApp")
     }
 
     ////
-    /*function formatDataForChart(){
-        
+    function formatDataForChart(){
+
+        if(!jQuery.isEmptyObject($scope.detalles)){
+            var rows = [];
+            $scope.chartObject.type = "ColumnChart";
+            $scope.detalles.forEach(function(item){
+                var fecIni = $filter('date')(item.fecha_ini, "MM/dd/yyyy");
+                var fecEnd = $filter('date')(item.fecha_end, "MM/dd/yyyy");
+                var title = item.categoria + "\n" + fecIni + " - " + fecEnd;
+               rows.push({c: [{v: title},{v: item.presupuesto}, {v: item.total}, {v: item.presupuesto - item.total} ] }); 
+            });
+            
+            $scope.chartObject.data = {"cols": [
+                { label: "Categoria", type: "string"},
+                { label: "Presupuestado", type: "number"},
+                { label: "Monto Real", type: "number"},
+                { label: "Monto Neto", type: "number"}
+
+            ], "rows": rows
+            };
+            
+            $scope.chartObject.options = {
+                'title': 'Presupuesto',
+                 'vAxis': {
+                  'title': 'Montos'
+                  //,'format': 'currency'
+                 },
+                 'hAxis': {
+                  'title': 'Tipos'
+                }
+            };
+            
+        }
     }
     
-    $scope.chartObject = {};
     
-    $scope.chartObject.type = "ColumnChart";
-    
-    $scope.onions = [
-        {v: "Onions"},
-        {v: 3},
-    ];
 
-    $scope.chartObject.data = {"cols": [
-        {id: "t", label: "Topping", type: "string"},
-        {id: "s", label: "Slices", type: "number"}
-        
-    ], "rows": [
-        {c: [
-            {v: "Mushrooms"},
-            {v: 3},
-        ]},
-        {c: $scope.onions},
-        {c: [
-            {v: "Olives"},
-            {v: 31}
-        ]},
-        {c: [
-            {v: "Zucchini"},
-            {v: 1},
-        ]},
-        {c: [
-            {v: "Pepperoni"},
-            {v: 2},
-        ]}
-    ]};
-
-    $scope.chartObject.options = {
-        'title': 'How Much Pizza I Ate Last Night'
-    };*/
 }])
 
