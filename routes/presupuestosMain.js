@@ -27,6 +27,7 @@ router.post("/",function(req, res, next){
     //Get Form Values
     var descripcion = req.body.descripcion;
     var fecha_inicio = req.body.fecha_inicio;
+    var fecha_final = req.body.fecha_final;
     var categoria = req.body.categoria;
     var valor_categoria = req.body.valor_categoria;
     var detalles = req.body.detalles;
@@ -35,6 +36,7 @@ router.post("/",function(req, res, next){
     var newPresupuesto = new PresupuestoMain({
         descripcion: descripcion,
         fecha_inicio: fecha_inicio,
+        fecha_final: fecha_final,
         categoria: categoria,
         valor_categoria: valor_categoria,
         detalles: detalles,
@@ -58,6 +60,7 @@ router.put("/",function(req,res,next){
     var data = {
         descripcion: req.body.descripcion,
         fecha_inicio: req.body.fecha_inicio,
+        fecha_final: req.body.fecha_final,
         categoria: req.body.categoria,
         valor_categoria: req.body.valor_categoria,
         detalles: req.body.detalles,

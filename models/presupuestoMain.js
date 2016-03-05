@@ -9,6 +9,10 @@ var presupuestoMainSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+    fecha_final:{
+        type: Date,
+        required: true
+    },
     categoria:{
         type: String,
         required: true
@@ -48,6 +52,7 @@ module.exports.createPresupuestoMain = function(newPresupuesto, callback){
 module.exports.updatePresupuestoMain = function(id,data,callback){
     var descripcion = data.descripcion;
     var fecha_inicio = data.fecha_inicio;
+    var fecha_final = data.fecha_final;
     var categoria = data.categoria;
     var valor_categoria = data.valor_categoria;
     var detalles = data.detalles;
@@ -63,6 +68,7 @@ module.exports.updatePresupuestoMain = function(id,data,callback){
             //Update
             presupuesto.descripcion = descripcion;
             presupuesto.fecha_inicio = fecha_inicio;
+            presupuesto.fecha_final = fecha_final;
             presupuesto.categoria = categoria;
             presupuesto.valor_categoria = valor_categoria;
             presupuesto.detalles = detalles;

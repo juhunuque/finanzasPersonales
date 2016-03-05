@@ -34,7 +34,7 @@ angular.module("finanzasApp")
         var resultObject = [];
         var tipos =JSON.parse($scope.presupuestoMain.tipos)
         
-        for( tipo in  tipos ){
+        /*for( tipo in  tipos ){
             while ( count != 0 ){
                 movimientosArray.forEach(function (item){
                     if(item.categoria === tipos[tipo].tipo.descripcion
@@ -62,6 +62,41 @@ angular.module("finanzasApp")
             dateIni = new Date($scope.presupuestoMain.fecha_inicio);
             dateEnd = new Date(new Date(dateIni).setMonth(dateIni.getMonth()+$scope.presupuestoMain.valor_categoria));
             count = 12;
+        }*/
+        
+        for( tipo in  tipos ){
+            while ( dateIni < dateEnd ){
+                movimientosArray.forEach(function (item){
+                    if(item.categoria === tipos[tipo].tipo.descripcion
+                        && new Date(item.fecha) >= dateIni
+                        && new Date(item.fecha) <= dateEnd){
+                        result = result + item.monto;
+                    }
+                });   
+                
+                if ( result !== 0 ){
+                    resultObject.push({categoria: tipos[tipo].tipo.descripcion,
+                                  fecha_ini: dateIni,
+                                  fecha_end: dateEnd,
+                                  presupuesto: tipos[tipo].monto,
+                                  total: result}); 
+                }
+                
+                dateIni = dateEnd;
+                dateEnd = new Date(new Date(dateIni).setMonth(dateIni.getMonth()+$scope.presupuestoMain.valor_categoria));
+                
+                if(dateEnd > new Date($scope.presupuestoMain.fecha_final)){
+                    dateEnd = new Date($scope.presupuestoMain.fecha_final);
+                }
+                
+                result = 0;
+                count = count - $scope.presupuestoMain.valor_categoria;
+                
+            }
+
+            dateIni = new Date($scope.presupuestoMain.fecha_inicio);
+            dateEnd = new Date(new Date(dateIni).setMonth(dateIni.getMonth()+$scope.presupuestoMain.valor_categoria));
+            count = 12;
         }
         
         if(!jQuery.isEmptyObject(resultObject)){
@@ -69,6 +104,7 @@ angular.module("finanzasApp")
                 id: $scope.presupuestoMain._id,
                 descripcion: $scope.presupuestoMain.descripcion,
                 fecha_inicio: $scope.presupuestoMain.fecha_inicio,
+                fecha_final: $scope.presupuestoMain.fecha_final,
                 categoria: $scope.presupuestoMain.categoria,
                 valor_categoria: $scope.presupuestoMain.valor_categoria,
                 tipos: $scope.presupuestoMain.tipos,

@@ -45,6 +45,7 @@ angular.module("finanzasApp")
     function refresh(){
         $scope.descripcion = "";
         $scope.fecha_inicio = "";
+        $scope.fecha_final = "";
         $dataFactory.presupuestoSelected = {};
         $scope.monto = "";
         
@@ -68,6 +69,7 @@ angular.module("finanzasApp")
         $scope.id = row._id;
         $scope.descripcion = row.descripcion;
         $scope.fecha_inicio = $filter('date')(row.fecha_inicio, "MM/dd/yyyy");
+        $scope.fecha_final = $filter('date')(row.fecha_final, "MM/dd/yyyy");
         $scope.categoria = row.categoria;
         $scope.valor_categoria = row.valor_categoria;
         
@@ -115,6 +117,7 @@ angular.module("finanzasApp")
             $http.post('/presupuestosMain',{
                 descripcion: $scope.descripcion,
                 fecha_inicio: $scope.fecha_inicio,
+                fecha_final: $scope.fecha_final,
                 categoria: selectedFrecuenciaSelect.name,
                 valor_categoria: selectedFrecuenciaSelect.value,
                 detalles: '',
@@ -150,6 +153,7 @@ angular.module("finanzasApp")
                 id: $scope.id,
                 descripcion: $scope.descripcion,
                 fecha_inicio: $scope.fecha_inicio,
+                fecha_final: $scope.fecha_final,
                 categoria: selectedFrecuenciaSelect.name,
                 valor_categoria: selectedFrecuenciaSelect.value,
                 tipos: JSON.stringify($scope.tiposSelected)
