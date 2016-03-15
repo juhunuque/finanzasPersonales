@@ -17,11 +17,13 @@ angular.module('finanzasApp')
    ];
     
     var presupuestoSelected = {};
+    var ahorroSelected = {};
     
     return {
         tipos: tipos,
         frecuencias: frecuencias,
-        presupuestoSelected: presupuestoSelected
+        presupuestoSelected: presupuestoSelected,
+        ahorroSelected: ahorroSelected
         };
 })
 

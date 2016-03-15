@@ -1,0 +1,71 @@
+<h3 class="center">Cuentas de Ahorro</h3>
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;" ng-show="!addNew">
+    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="addNewOn()">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<div class="row" ng-show="addNew">
+    <form class="col s12" >
+      <div class="row">
+          
+          <div class="input-field col s3 m3 l3" ng-if="!selectStatus && selectName != null">
+          <p>Tipo: {{selectName}}      <a ng-click="cambiarSelect()">Cambiar</a></p>
+            </div>
+
+            <div class="input-field col s3 m3 l3" ng-if="selectStatus && selectName == null">
+                <select ng-model="selectedTipo" ng-options="tipo.nombre for tipo in tipos" 
+                        ng-if="tipos" ng-selected="selectedTipo.nombre == tipo.nombre" ng-change="selectedTipoSel(selectedTipo)" >
+                </select>
+                <label>Banco</label>
+            </div>
+          
+            <div class="input-field col s4 m4 l4">
+              <input placeholder="Descripcion" id="descripcion" type="text"  ng-model="descripcion" class="validate">
+            </div>
+          
+          <div class="input-field col s4 m4 l4">
+              <input placeholder="Tasa" id="tasa" type="text"  ng-model="tasa" class="validate">
+            </div>
+
+
+            <div class="input-field col s2 m2 l2 center">
+                <button class="btn waves-effect waves-light indigo darken-3 btn-floating" ng-click="addTipo()" name="action">
+                    <i class="material-icons left">done</i>
+                </button>
+                <button class="btn waves-effect waves-light red btn-floating" ng-click="addNewOff()" name="action">
+                    <i class="material-icons left">clear</i>
+                </button>
+            </div>
+        </div>
+
+    </form>
+  </div>
+<br>
+<table datatable="ng" dt-options="dtOptions">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th># Cuenta</th>
+                <th>Banco</th>
+                <th>Descripcion</th>
+                <th>Saldo</th>
+                <th>Tasa Anual</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="cuenta in cuentas">
+                <td>{{$index + 1}}</td>
+                <td>{{cuenta.numeroCuenta}}</td>
+                <td>{{cuenta.banco}}</td>
+                <td>{{cuenta.descripcion}}</td>
+                <td>{{cuenta.saldo | currency : '₡' : fractionSize}}</td>
+                <td>{{cuenta.tasa}}%</td>
+                <td><a ng-click="updateActivate(cuenta)" href=""><i class="material-icons left">edit</i></a> <a ng-click="deleteRow(cuenta)" href=""><i class="material-icons left">delete</i></a><a ng-click="goToDetails(cuenta)" href=""><i class="material-icons left">reorder</i></a><a ng-click="goToInteres(cuenta)" href=""><i class="material-icons left">attach_money</i></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+

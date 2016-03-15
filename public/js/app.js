@@ -19,5 +19,21 @@ app.config(['$routeProvider',function($routeProvider){
         templateUrl: 'views/presupuestoDetail.view.html',
         controller: 'PresupuestoDetailCtrl'
     })
+    .when('/ahorroMain',{
+        templateUrl: 'views/ahorroMain.view.html',
+        controller: 'AhorroMainCtrl'
+    })
+    .when('/bancos',{
+        templateUrl: 'views/bancos.view.html',
+        controller: 'BancosCtrl'
+    })
+    .when('/ahorroDetail',{
+        templateUrl: 'views/ahorroDetail.view.html',
+        controller: 'AhorroDetailCtrl'
+    })
+    .when('/ahorroInteres',{
+        templateUrl: 'views/ahorroIntere.view.html',
+        controller: 'AhorroInteresCtrl'
+    })
     .otherwise({redirectTo: 'movimientos'})
 }]);

@@ -1,0 +1,47 @@
+<h3 class="center">Saldos</h3>
+
+<div class="row ">
+
+    <div class="col s12 m12 l12">
+        <div class="row">
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;"># Cuenta</h6>
+                <span>{{ahorroMain.numeroCuenta}}</span>
+            </div>
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;">Saldo</h6>
+                <span>{{ahorroMain.saldo | currency : '₡' : fractionSize}}</span>
+            </div>
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;">Tasa Anual</h6>
+                <span>{{ahorroMain.tasa}}%</span>
+            </div>
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;">Acciones</h6>
+                <a href="#/ahorroMain">Volver</a>
+                <a style="margin-rigth:-10%;"ng-click="runCreateProcess()" href=""><i class="material-icons left">play_arrow</i></a>
+            </div>
+        </div>
+        
+    </div> 
+    
+
+
+<table datatable="ng" dt-options="dtOptions">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Intereses</th>
+                <th>Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="interes in intereses">
+                <td>{{$index + 1}}</td>
+                <td>{{interes.fecha | date:'MM/dd/yyyy'}}</td>
+                <td>{{interes.interes | currency : '₡' : fractionSize}}</td>
+                <td>{{interes.saldo | currency : '₡' : fractionSize}}</td>
+            </tr>
+        </tbody>
+    </table>

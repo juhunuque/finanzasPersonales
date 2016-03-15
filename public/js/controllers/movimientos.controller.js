@@ -59,27 +59,13 @@ angular.module("finanzasApp")
             //UPDATE
             var tipo = "";
             var categoria = ""
-    
-            console.log("Q1: " + $scope.selectStatus);
-            console.log("Q2: " + $scope.selectName);
-            console.log("Q3: " + $scope.tipo);
-            console.log("Q4: " + $scope.selectName);
-            console.log("Q5: " + selectedTipoSelect.tipo);
-            console.log("Q6: " + selectedTipoSelect.categoria);
-            
             if(!$scope.selectStatus && $scope.selectName != null){
                 tipo = $scope.tipo;
                 categoria = $scope.selectName;
-                console.log("2");
-
 
             }else{
                 tipo = selectedTipoSelect.tipo;
                 categoria = selectedTipoSelect.descripcion;
-                            console.log("1");
-                
-                
-
             }
             
             $http.put('/movimientos',{

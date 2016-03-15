@@ -1,0 +1,104 @@
+<h3 class="center">Movimientos</h3>
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;" ng-show="!addNew">
+    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="addNewOn()">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<div class="row ">
+
+    <div class="col s12 m12 l12">
+        <div class="row">
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;"># Cuenta</h6>
+                <span>{{ahorroMain.numeroCuenta}}</span>
+            </div>
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;">Saldo</h6>
+                <span>{{ahorroMain.saldo | currency : '₡' : fractionSize}}</span>
+            </div>
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;">Tasa Anual</h6>
+                <span>{{ahorroMain.tasa}}%</span>
+            </div>
+            <div class="col s3 m3 l3">
+                <h6 style="font-weight: bold;">Acciones</h6>
+                <a ng-click="reLoad()" href=""><i class="material-icons left">cached</i></a>
+                <a href="#/ahorroMain">Volver</a>
+            </div>
+        </div>
+        
+        
+    </div> 
+    
+</div>
+  <div class="row" ng-show="addNew">
+    <form class="col s12" >
+      <div class="row">
+          
+        <div class="input-field col s2 m2 l2">
+            <datepicker date-format="MM/dd/yyyy" date-typer="true" >
+              <input ng-model="fecha" type="text" />
+            </datepicker>
+        </div>
+          
+        <div class="input-field col s3 m3 l3" ng-if="!selectStatus && selectName != null">
+          <p>Tipo: {{selectName}}      <a ng-click="cambiarSelect()">Cambiar</a></p>
+        </div>
+          
+        <div class="input-field col s3 m3 l3" ng-if="selectStatus && selectName == null">
+            <select ng-model="selectedTipo" ng-options="tipo.descripcion for tipo in tipos" 
+                    ng-if="tipos" ng-selected="selectedTipo.descripcion == tipo.descripcion" ng-change="selectedTipoSel(selectedTipo)" >
+            </select>
+            <label>Tipo</label>
+        </div>
+          
+        <div class="input-field col s2 m2 l2">
+          <input placeholder="Monto" id="monto" type="number"  ng-model="monto" min="0" class="validate">
+        </div>
+          
+        <div class="input-field col s3 m3 l3">
+          <input placeholder="Descripcion" id="descripcion" type="text"  ng-model="descripcion" class="validate">
+        </div>
+          
+        <div class="input-field col s2 m2 l2 center">
+            <button class="btn waves-effect waves-light indigo darken-1 btn-floating" ng-click="addMovimiento()" name="action">
+                <i class="material-icons left">done</i>
+            </button>
+            <button class="btn waves-effect waves-light red btn-floating" ng-click="addNewOff()" name="action">
+                <i class="material-icons left">clear</i>
+            </button>
+        </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+<table datatable="ng" dt-options="dtOptions">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Categoria</th>
+                <th>Monto</th>
+                <th>Saldo</th>
+                <th>Descripcion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="movimiento in movimientos">
+                <td>{{$index + 1}}</td>
+                <td>{{movimiento.fecha | date:'MM/dd/yyyy'}}</td>
+                <td>{{movimiento.categoria}}</td>
+                <td ng-if="movimiento.tipo == 'Egreso'"><span class="red-text">{{movimiento.monto | currency : '₡' : fractionSize}}</span></td>
+                <td ng-if="movimiento.tipo == 'Ingreso'"><span>{{movimiento.monto | currency : '₡' : fractionSize}}</span></td>
+                <td>{{movimiento.saldo | currency : '₡' : fractionSize}}</td>
+                <td>{{movimiento.descripcion}}</td>
+                <td ng-if="movimiento.categoria != 'Intereses'"><a href="" ng-click="updateActivate(movimiento)"><i class="material-icons left">edit</i></a><a href="" ng-click="deleteRow(movimiento)"><i class="material-icons left">delete</i></a></td>
+                <td ng-if="movimiento.categoria == 'Intereses'"></td>
+            </tr>
+        </tbody>
+    </table>
