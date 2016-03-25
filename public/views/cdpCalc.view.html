@@ -1,0 +1,76 @@
+<h3 class="center">Calculadora CDPs</h3>
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;" ng-show="resultFlag">
+    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="clean()">
+      <i class="large material-icons">delete</i>
+    </a>
+</div>
+
+<div class="row">
+    <form ng-submit="calculate()">
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <input id="capital" type="number"  ng-model="data.capital" min="0" class="validate">
+                <label for="capital">Capital</label>
+            </div>
+
+            <div class="input-field col s6 m6 l6">
+                <input id="rate" type="number"  ng-model="data.rate" min="0" class="validate">
+                <label for="rate">Tasa</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <datepicker date-format="MM/dd/yyyy" date-typer="true"  >
+                  <input ng-model="data.startDate" type="text" placeholder="Desde" id="startDate"/>
+                </datepicker>
+            </div>
+
+            <div class="input-field col s6 m6 l6">  
+                <datepicker date-format="MM/dd/yyyy" date-typer="true" >
+                  <input ng-model="data.endDate" type="text" id="endDate" placeholder="Hasta" />
+                </datepicker>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6 m6 l6">
+                <input id="days" type="number"  ng-model="data.days" min="0" class="validate">
+                <label for="days"># Dias</label>
+            </div>
+
+            <div class="input-field col s6 m6 l6">
+                <input id="interest" type="number"  ng-model="data.interest" min="0" class="validate" pattern="[0-9]+([\.,][0-9]+)?" step="any">
+                <label for="interest">Intereses</label>
+            </div>
+            
+        </div>
+        
+        <button class="btn waves-effect waves-light indigo darken-1 btn-floating right" type="submit">
+                <i class="material-icons left">settings</i>
+            </button>
+    </form>
+</div>
+
+<table ng-show="resultFlag" class="striped centered">
+        <thead>
+          <tr>
+              <th data-field="id">Calculando</th>
+              <th data-field="name">Formula</th>
+              <th data-field="price">Resultado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="result in resultsData">
+            <td>{{result.title}}</td>
+            <td>{{result.description}}</td>
+            <td ng-if="result.isCurrency">{{result.result | currency : '₡' : fractionSize}}</td>
+            <td ng-if="!result.isCurrency">{{result.result | number:2}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+

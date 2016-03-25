@@ -35,5 +35,9 @@ app.config(['$routeProvider',function($routeProvider){
         templateUrl: 'views/ahorroIntere.view.html',
         controller: 'AhorroInteresCtrl'
     })
+    .when('/cdpCalc',{
+        templateUrl: 'views/cdpCalc.view.html',
+        controller: 'CdpCalcCtrl'
+    })
     .otherwise({redirectTo: 'movimientos'})
 }]);
