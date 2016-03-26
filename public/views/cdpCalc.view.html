@@ -10,13 +10,13 @@
     <form ng-submit="calculate()">
         <div class="row">
             <div class="input-field col s6 m6 l6">
-                <input id="capital" type="number"  ng-model="data.capital" min="0" class="validate">
+                <input id="capital" type="number"  ng-model="data.capital" min="0" class="validate" pattern="[0-9]+([\.,][0-9]+)?" step="any">
                 <label for="capital">Capital</label>
             </div>
 
             <div class="input-field col s6 m6 l6">
-                <input id="rate" type="number"  ng-model="data.rate" min="0" class="validate">
-                <label for="rate">Tasa</label>
+                <input id="rate" type="number"  ng-model="data.rate" min="0" class="validate" pattern="[0-9]+([\.,][0-9]+)?" step="any">
+                <label for="rate">Tasa Anual</label>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
 
         <div class="row">
             <div class="input-field col s6 m6 l6">
-                <input id="days" type="number"  ng-model="data.days" min="0" class="validate">
+                <input id="days" type="number"  ng-model="data.days" min="0" class="validate" pattern="[0-9]+([\.,][0-9]+)?" step="any">
                 <label for="days"># Dias</label>
             </div>
 

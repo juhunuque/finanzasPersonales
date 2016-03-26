@@ -9,10 +9,6 @@
  * Date: 2016-03-24
  */
 (function(cdLib, $, undefined){
-
-    cdLib.helloJulio = function(item){
-        alert('Hello '+item);
-    }
     
     cdLib.calculatingInterest = function( capital, rate, term ){
         /*
@@ -211,7 +207,7 @@
     };
     
     function isEmptyObject(item){
-        if(typeof item === 'undefined' || typeof item === 'null' || item === ''){
+        if(typeof item === 'undefined' || item === null || item === ''){
             return true;
         }else{
             return false;

@@ -61,57 +61,64 @@ angular.module('finanzasApp')
         console.log('Calculating...');
         $scope.resultsData = [];
         // Interest
-        if(typeof $scope.data.capital !== 'undefined' && typeof $scope.data.rate !== 'undefined' && typeof $scope.data.days !== 'undefined'){
+        if(!isEmptyObject($scope.data.capital) && !isEmptyObject($scope.data.rate) && !isEmptyObject($scope.data.days)){
             formula.interest.result = cdLib.calculatingInterest($scope.data.capital,$scope.data.rate,$scope.data.days);
             $scope.resultsData.push(formula.interest);
         }
         
-        if(typeof $scope.data.capital !== 'undefined' && typeof $scope.data.rate !== 'undefined' 
-           && (!jQuery.isEmptyObject($scope.data.startDate) && (!jQuery.isEmptyObject($scope.data.endDate)) )){
+        if(!isEmptyObject($scope.data.capital) && !isEmptyObject($scope.data.rate) && (!isEmptyObject($scope.data.startDate) && !isEmptyObject($scope.data.endDate)) ){
             formula.interestDates.result=cdLib.calculatingInterestDates($scope.data.capital,$scope.data.rate,new Date($scope.data.startDate),new Date($scope.data.endDate));
             $scope.resultsData.push(formula.interestDates);
         }
     
         // Term
     
-        if(typeof $scope.data.interest !== 'undefined' && typeof $scope.data.capital !== 'undefined' && typeof $scope.data.rate !== 'undefined'){
+        if(!isEmptyObject($scope.data.interest) && !isEmptyObject($scope.data.capital) && !isEmptyObject($scope.data.rate)){
             formula.term.result = cdLib.calculatingTerm($scope.data.interest,$scope.data.capital,$scope.data.rate);
             $scope.resultsData.push(formula.term);
         }
     
         // Rate
         
-        if(typeof $scope.data.interest !== 'undefined' && typeof $scope.data.capital !== 'undefined' && typeof $scope.data.days !== 'undefined'){
+        if(!isEmptyObject($scope.data.interest) && !isEmptyObject($scope.data.capital) && !isEmptyObject($scope.data.days)){
             formula.rate.result = cdLib.calculatingRate($scope.data.interest,$scope.data.capital,$scope.data.days);
             $scope.resultsData.push(formula.rate);
         }
     
-        if(typeof $scope.data.capital !== 'undefined' && typeof $scope.data.interest !== 'undefined' 
-               && (!jQuery.isEmptyObject($scope.data.startDate) && (!jQuery.isEmptyObject($scope.data.endDate)) )){
+        if(!isEmptyObject($scope.data.capital) && !isEmptyObject($scope.data.interest) 
+               && (!isEmptyObject($scope.data.startDate) && !isEmptyObject($scope.data.endDate)) ){
             formula.rateDates.result = cdLib.calculatingRateDates($scope.data.interest,$scope.data.capital,$scope.data.startDate,$scope.data.endDate);
             $scope.resultsData.push(formula.rateDates);
         }
                            
         // Capital               
-        if(typeof $scope.data.interest !== 'undefined' && typeof $scope.data.rate !== 'undefined' && typeof $scope.data.days !== 'undefined'){
+        if(!isEmptyObject($scope.data.interest) && !isEmptyObject($scope.data.rate) && !isEmptyObject($scope.data.days)){
             formula.capital.result = cdLib.calculatingCapital($scope.data.interest,$scope.data.rate,$scope.data.days);
             $scope.resultsData.push(formula.capital);
         }
                            
-        if(typeof $scope.data.interest !== 'undefined' && typeof $scope.data.rate !== 'undefined' 
-               && (!jQuery.isEmptyObject($scope.data.startDate) && (!jQuery.isEmptyObject($scope.data.endDate)) )){
+        if(!isEmptyObject($scope.data.interest) && !isEmptyObject($scope.data.rate) 
+               && (!isEmptyObject($scope.data.startDate) && !isEmptyObject($scope.data.endDate)) ){
             formula.capitalDates.result = cdLib.calculatingCapitalDates($scope.data.interest,$scope.data.rate,$scope.data.startDate,$scope.data.endDate);
             $scope.resultsData.push(formula.capitalDates);
         }
         
         if($scope.resultsData.length > 0){
-            toastr.success("Procesado!");
+            toastr.success("Processing!");
             $scope.resultFlag = true;
 
         }else{
-            toastr.error("Datos Insuficientes");               
+            toastr.error("Insufficient Data");               
         }
 
     };
+    
+    function isEmptyObject(item){
+        if(typeof item === 'undefined' || item === null || item === ''){
+            return true;
+        }else{
+            return false;
+        }
+    }
         
 }])
