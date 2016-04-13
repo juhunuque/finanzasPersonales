@@ -185,6 +185,58 @@
         }
     }
     
+    
+    cdLib.annualisedYield = function( inverstment, performance, days ){
+        /*
+        * Get the annualised yield of an Inverstment Found
+        *    FORMULA:
+        *       ((Final Value / Initial Value)^(365/days))-1  
+        *    INPUT:
+        *    - inverstment = Numeric
+        *    - performance = Numeric
+        *    - days = Days within the period
+        *    OUTPUT:
+        *    - Capital
+        */
+        try{
+            if(isEmptyObject(inverstment) || isEmptyObject(performance) || isEmptyObject(days)){
+                throw new UserException('INVALID DATA');
+            }
+            
+            return (Math.pow((performance/inverstment),(365/days)))-1;
+        }catch(err){
+            console.error("CDLIB " + err.message);
+            console.trace();
+            return 0;
+        }
+    }
+    
+    cdLib.annualisedYieldDates = function( inverstment, performance, startDate, endDate ){
+        /*
+        * Get the annualised yield of an Inverstment Found
+        *    FORMULA:
+        *       ((Final Value / Initial Value)^(365/days))-1  
+        *    INPUT:
+        *    - inverstment = Numeric
+        *    - performance = Numeric
+        *    - startDate = Start date in Date format
+        *    - endDate = End date in Date format
+        *    OUTPUT:
+        *    - Capital
+        */
+        try{
+            if(isEmptyObject(inverstment) || isEmptyObject(performance) || isEmptyObject(startDate) || isEmptyObject(endDate)){
+                throw new UserException('INVALID DATA');
+            }
+            
+            return (Math.pow((performance/inverstment),(365/cdLib.daysBetweenDates(startDate, endDate))))-1;
+        }catch(err){
+            console.error("CDLIB " + err.message);
+            console.trace();
+            return 0;
+        }
+    }
+    
     cdLib.daysBetweenDates = function( start, end ){
        /*
         *    INPUT:
