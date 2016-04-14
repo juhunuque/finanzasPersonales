@@ -185,8 +185,8 @@
         }
     }
     
-    
-    cdLib.annualisedYield = function( inverstment, performance, days ){
+    // Inverstment Founds
+    cdLib.profit = function( inverstment, performance, days ){
         /*
         * Get the annualised yield of an Inverstment Found
         *    FORMULA:
@@ -196,7 +196,7 @@
         *    - performance = Numeric
         *    - days = Days within the period
         *    OUTPUT:
-        *    - Capital
+        *    - Profit
         */
         try{
             if(isEmptyObject(inverstment) || isEmptyObject(performance) || isEmptyObject(days)){
@@ -211,7 +211,7 @@
         }
     }
     
-    cdLib.annualisedYieldDates = function( inverstment, performance, startDate, endDate ){
+    cdLib.profitDates = function( inverstment, performance, startDate, endDate ){
         /*
         * Get the annualised yield of an Inverstment Found
         *    FORMULA:
@@ -222,7 +222,7 @@
         *    - startDate = Start date in Date format
         *    - endDate = End date in Date format
         *    OUTPUT:
-        *    - Capital
+        *    - Profit
         */
         try{
             if(isEmptyObject(inverstment) || isEmptyObject(performance) || isEmptyObject(startDate) || isEmptyObject(endDate)){
@@ -230,6 +230,110 @@
             }
             
             return (Math.pow((performance/inverstment),(365/cdLib.daysBetweenDates(startDate, endDate))))-1;
+        }catch(err){
+            console.error("CDLIB " + err.message);
+            console.trace();
+            return 0;
+        }
+    }
+    
+    cdLib.performance = function( inverstment, profit, days ){
+        /*
+        * Get the annualised yield of an Inverstment Found
+        *    FORMULA:
+        *       ((365/days)√((Profit/100)+1))*Initial Value
+        *    INPUT:
+        *    - inverstment = Numeric
+        *    - profit = In percentage
+        *    - days = Days within the period
+        *    OUTPUT:
+        *    - Performance
+        */
+        try{
+            if(isEmptyObject(inverstment) || isEmptyObject(profit) || isEmptyObject(days)){
+                throw new UserException('INVALID DATA');
+            }
+            
+            return nthRoot((profit/100)+1,(365/days))*inverstment;
+        }catch(err){
+            console.error("CDLIB " + err.message);
+            console.trace();
+            return 0;
+        }
+    }
+    
+    cdLib.performanceDates = function( inverstment, profit, startDate, endDate ){
+        /*
+        * Get the annualised yield of an Inverstment Found
+        *    FORMULA:
+        *       ((365/days)√((Profit/100)+1))*Initial Value
+        *    INPUT:
+        *    - inverstment = Numeric
+        *    - profit = In percentage
+        *    - startDate = Start date in Date format
+        *    - endDate = End date in Date format
+        *    OUTPUT:
+        *    - Performance
+        */
+        try{
+            if(isEmptyObject(inverstment) || isEmptyObject(profit) || isEmptyObject(startDate) || isEmptyObject(endDate)){
+                throw new UserException('INVALID DATA');
+            }
+            return nthRoot((profit/100)+1,(365/cdLib.daysBetweenDates(startDate, endDate)))*inverstment;
+            
+        }catch(err){
+            console.error("CDLIB " + err.message);
+            console.trace();
+            return 0;
+        }
+    }
+    
+    cdLib.inverstment = function( performance, profit, days ){
+        /*
+        * Get the annualised yield of an Inverstment Found
+        *    FORMULA:
+        *       (Final Value/((365/days)√((Profit/100)+1)))
+        *    INPUT:
+        *    - performance = Numeric
+        *    - profit = In percentage
+        *    - days = Days within the period
+        *    OUTPUT:
+        *    - Inverstment
+        */
+        try{
+            if(isEmptyObject(performance) || isEmptyObject(profit) || isEmptyObject(days)){
+                throw new UserException('INVALID DATA');
+            }
+            
+            return performance/(nthRoot((profit/100)+1,(365/days)))
+            
+        }catch(err){
+            console.error("CDLIB " + err.message);
+            console.trace();
+            return 0;
+        }
+    }
+    
+    cdLib.inverstmentDates = function( performance, profit, startDate, endDate ){
+        /*
+        * Get the annualised yield of an Inverstment Found
+        *    FORMULA:
+        *       (Final Value/((365/days)√((Profit/100)+1)))
+        *    INPUT:
+        *    - performance = Numeric
+        *    - profit = In percentage
+        *    - startDate = Start date in Date format
+        *    - endDate = End date in Date format
+        *    OUTPUT:
+        *    - Inverstment
+        */
+        try{
+            if(isEmptyObject(performance) || isEmptyObject(profit) || isEmptyObject(startDate) || isEmptyObject(endDate)){
+                throw new UserException('INVALID DATA');
+            }
+            
+            return performance/(nthRoot((profit/100)+1,(365/cdLib.daysBetweenDates(startDate, endDate))))
+            
         }catch(err){
             console.error("CDLIB " + err.message);
             console.trace();
@@ -265,6 +369,12 @@
             return false;
         }
     }
+    
+    // Get root extracting 
+    function nthRoot(x, n) {
+      if(x < 0 && n%2 != 1) return NaN; // Not well defined
+      return (x < 0 ? -1 : 1) * Math.pow(Math.abs(x), 1/n);
+    }   
     
     function UserException(message) {
        this.message = message;
