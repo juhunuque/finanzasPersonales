@@ -341,6 +341,32 @@
         }
     }
     
+    cdLib.daysInverstmentFound = function( performance, profit, inverstment ){
+        /*
+        * Get the annualised yield of an Inverstment Found
+        *    FORMULA:
+        *       Log(365√(Profit/100)+1)(Final Value/ Initial Value)
+        *    INPUT:
+        *    - performance = Numeric
+        *    - profit = In percentage
+        *    - inverstment = Numeric
+        *    OUTPUT:
+        *    - Days
+        */
+        try{
+            if(isEmptyObject(performance) || isEmptyObject(profit) || isEmptyObject(inverstment)){
+                throw new UserException('INVALID DATA');
+            }
+            
+            return (Math.log(performance/inverstment) / Math.log((nthRoot((profit/100)+1,365))));
+            
+        }catch(err){
+            console.error("CDLIB " + err.message);
+            console.trace();
+            return 0;
+        }
+    }
+    
     cdLib.daysBetweenDates = function( start, end ){
        /*
         *    INPUT:

@@ -51,6 +51,12 @@ angular.module('finanzasApp')
           description: '(Vf/((365/dias)√((Rentabilidad/100)+1)))', 
           result: 0,
           isCurrency: true
+      },
+        days: {
+          title: 'Dias',
+          description: 'Log(365√(Rentabilidad/100)+1)(Vf/Vi)', 
+          result: 0,
+          isCurrency: false
       }
          
     }; 
@@ -105,6 +111,12 @@ angular.module('finanzasApp')
         if(!isEmptyObject($scope.data.performance) && !isEmptyObject($scope.data.profit) && (!isEmptyObject($scope.data.startDate) && !isEmptyObject($scope.data.endDate)) ){
             formula.inverstmentCalendar.result = cdLib.inverstmentDates($scope.data.performance,$scope.data.profit,$scope.data.startDate,$scope.data.endDate);
             $scope.resultsData.push(formula.inverstmentCalendar);
+        }
+        
+        // Days
+        if(!isEmptyObject($scope.data.performance) && !isEmptyObject($scope.data.profit) && !isEmptyObject($scope.data.inverstment)){
+            formula.days.result = cdLib.daysInverstmentFound($scope.data.performance,$scope.data.profit,$scope.data.inverstment);
+            $scope.resultsData.push(formula.days);
         }
         
         
